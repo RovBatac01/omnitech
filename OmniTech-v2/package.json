@@ -1,0 +1,45 @@
+{
+  "name": "omnitech-business-platform",
+  "version": "2.1.0",
+  "private": true,
+  "description": "Omnitech website, accessible content management, quotations and engagement reporting.",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "scripts": {
+    "dev": "next dev --webpack",
+    "build": "next build --webpack",
+    "start": "node scripts/start.mjs",
+    "start:web": "next start",
+    "setup": "node --import tsx scripts/admin.ts create-owner",
+    "admin": "node --import tsx scripts/admin.ts",
+    "mail:worker": "node --import tsx scripts/mail-worker.ts",
+    "mail:once": "node --import tsx scripts/mail-worker.ts --once",
+    "backup": "node --import tsx scripts/backup.ts",
+    "prune": "node --import tsx scripts/prune.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test --test-isolation=none tests/backend.test.ts tests/contact.test.ts && npm run test:themes",
+    "test:e2e": "playwright test",
+    "test:themes": "node --import tsx --test tests/theme.test.ts",
+    "test:e2e:themes": "playwright test themes.spec.ts"
+  },
+  "dependencies": {
+    "lucide-react": "1.61.0",
+    "next": "16.4.3",
+    "nodemailer": "10.2.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "sharp": "0.35.5",
+    "tsx": "4.23.15"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
+    "@types/node": "24.19.2",
+    "@types/nodemailer": "8.0.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "typescript": "7.0.2"
+  },
+  "type": "module"
+}

@@ -1,0 +1,252 @@
+/* OmniTech 2.1 — appearance system.
+   Dark uses the original component color fallbacks. Light supplies semantic
+   tokens consumed by those same components; no image/color inversion is used. */
+:root {
+  --appearance-panel: #0c2633;
+  --appearance-line: #527581;
+  --appearance-hover: #163c46;
+  --appearance-text: #edf7fa;
+  --appearance-muted: #b7cdd5;
+  --appearance-accent: #7ce5d1;
+  --appearance-focus: #b1ff70;
+  --appearance-shadow: 0 18px 55px #0005;
+}
+:root[data-theme="light"] {
+  --active-color-scheme: light;
+  --ui-canvas: #f7fafb;
+  --ui-surface: #ffffff;
+  --ui-surface-alt: #edf5f5;
+  --ui-surface-raised: #ffffff;
+  --ui-surface-hover: #dfeeee;
+  --ui-field: #ffffff;
+  --ui-header: #fffffff5;
+  --ui-text: #152f3b;
+  --ui-muted: #405d69;
+  --ui-accent: #006b63;
+  --ui-accent-fill: #006b63;
+  --ui-on-accent: #ffffff;
+  --ui-line: #bdcfd3;
+  --ui-control-line: #6b858f;
+  --ui-focus: #6540bd;
+  --ui-glow: #008e830c;
+  --ui-shadow: #173e4914;
+  --ui-danger-text: #a32928;
+  --ui-danger-bg: #fff0ed;
+  --ui-danger-line: #bc6a63;
+  --ui-warning-text: #714a0a;
+  --ui-warning-bg: #fff6e3;
+  --ui-warning-line: #ad873c;
+  --ui-success-text: #1a6248;
+  --ui-success-bg: #e7f6ed;
+  --ui-success-line: #6d9e83;
+  --appearance-panel: #ffffff;
+  --appearance-line: #9cb9bf;
+  --appearance-hover: #edf5f5;
+  --appearance-text: #152f3b;
+  --appearance-muted: #405d69;
+  --appearance-accent: #006b63;
+  --appearance-focus: #6540bd;
+  --appearance-shadow: 0 18px 55px #173e491c;
+}
+:root[data-theme="dark"] { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
+html[data-theme="light"] .admin-root { color-scheme: light; }
+.theme-ready body { transition: background-color 180ms ease, color 180ms ease; }
+
+/* A transparent logo always reveals the real surface underneath. */
+.business-brand img.theme-logo { background: transparent; padding: 0; border-radius: 0; filter: none; mix-blend-mode: normal; object-fit: contain; }
+.business-brand .theme-logo-light, .theme-icon-light { display: none; }
+.business-brand .theme-logo-dark, .theme-icon-dark { display: block; }
+html[data-theme="light"] .business-brand .theme-logo-light, html[data-theme="light"] .theme-icon-light { display: block; }
+html[data-theme="light"] .business-brand .theme-logo-dark, html[data-theme="light"] .theme-icon-dark { display: none; }
+
+/* Navigation and a keyboard-accessible native-radio appearance disclosure. */
+.nav-shell { gap: 1.3rem; }
+.navigation { order: 1; }
+.nav-cta { order: 2; }
+.header-appearance { order: 3; flex-shrink: 0; }
+.theme-switcher { position: relative; flex: 0 0 auto; line-height: 1.5; }
+.theme-toggle {
+  width: 44px; height: 44px; min-width: 44px; min-height: 44px; padding: 0;
+  display: grid; place-items: center; border: 1px solid var(--appearance-line);
+  border-radius: 50%; color: var(--appearance-text); background: var(--appearance-panel);
+  transition: background 160ms ease, transform 160ms ease, border-color 160ms ease;
+}
+.theme-toggle:hover { background: var(--appearance-hover); border-color: var(--appearance-accent); transform: translateY(-2px); }
+.theme-toggle:active { transform: scale(.94); }
+.theme-toggle[aria-expanded="true"] { background: var(--appearance-hover); border-color: var(--appearance-accent); }
+.theme-switcher :focus-visible { outline: 3px solid var(--appearance-focus); outline-offset: 4px; }
+.theme-popover {
+  position: absolute; right: 0; top: calc(100% + 14px); z-index: 140;
+  width: 310px; max-width: calc(100vw - 2rem); padding: 19px;
+  border: 1px solid var(--appearance-line); border-radius: 17px;
+  background: var(--appearance-panel); color: var(--appearance-text);
+  box-shadow: var(--appearance-shadow); text-align: left;
+  animation: appearance-enter 140ms ease-out;
+}
+.theme-popover-heading { display: block; font-size: 1rem; font-weight: 700; letter-spacing: -.015em; }
+.theme-switcher .theme-popover > p { color: var(--appearance-muted); font-size: .8125rem; margin: 5px 0 15px; line-height: 1.6; }
+.theme-options { padding: 0; margin: 0; border: 0; display: grid; gap: 6px; min-width: 0; }
+.theme-option {
+  position: relative; display: flex; align-items: center; gap: 11px; padding: 11px;
+  min-height: 60px; border: 1px solid transparent; border-radius: 10px; cursor: pointer;
+  color: var(--appearance-text); transition: background 140ms ease, border-color 140ms ease;
+}
+.theme-option input { position: absolute; width: 1px; height: 1px; margin: 0; clip-path: inset(50%); overflow: hidden; }
+.theme-option strong { display: block; font-size: .9375rem; font-weight: 650; }
+.theme-option small { display: block; font-size: .75rem; color: var(--appearance-muted); margin-top: 1px; }
+.theme-option > svg { color: var(--appearance-accent); }
+.theme-option-check { margin-left: auto; opacity: 0; }
+.theme-option:hover, .theme-option:has(input:checked) { background: var(--appearance-hover); }
+.theme-option:has(input:checked) { border-color: var(--appearance-accent); }
+.theme-option:has(input:checked) .theme-option-check { opacity: 1; }
+.theme-option:has(input:focus-visible) { outline: 3px solid var(--appearance-focus); outline-offset: 2px; }
+@keyframes appearance-enter { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Intentional light surfaces: white cards, soft mint sections, dark teal actions. */
+html[data-theme="light"] .hero { background: radial-gradient(ellipse at 50% 58%,#d2eeeb80,transparent 67%); }
+html[data-theme="light"] .gradient-text, html[data-theme="light"] .hero-gradient { background-image: linear-gradient(115deg,#006b63,#176380); color: #006b63; }
+html[data-theme="light"] .button:not(.button-outline), html[data-theme="light"] .admin-button:not(.admin-button-secondary):not(.admin-button-danger) { background: #006b63; border-color: #006b63; color: #fff !important; }
+html[data-theme="light"] .button:not(.button-outline):hover, html[data-theme="light"] .admin-button:not(.admin-button-secondary):not(.admin-button-danger):hover { background: #00564f; border-color: #00564f; }
+html[data-theme="light"] .button-outline, html[data-theme="light"] .admin-button-secondary { background: #fff; border-color: #72919a; color: #174653 !important; }
+html[data-theme="light"] .button-outline:hover, html[data-theme="light"] .admin-button-secondary:hover { background: #edf5f5; color: #00564f !important; }
+html[data-theme="light"] .hub-core { background: radial-gradient(circle at 30% 15%,#fff,#deefec); border-color: #78aaa5; box-shadow: 0 0 0 10px #008e8309,0 12px 48px #008c801c; }
+html[data-theme="light"] .ecosystem-lines circle[fill="#082a39"] { fill: #e1efed; }
+html[data-theme="light"] .connection .path-pulse { stroke: #168b82; }
+html[data-theme="light"] .ecosystem-lines { opacity: .75; }
+html[data-theme="light"] .service-node { background: #fff; box-shadow: 0 6px 20px #173e4909; }
+html[data-theme="light"] .service-node:hover, html[data-theme="light"] .service-node.node-active { background: #e3f2ef; }
+html[data-theme="light"] .expertise-card, html[data-theme="light"] .project-card, html[data-theme="light"] .resource-card, html[data-theme="light"] .announcement-card, html[data-theme="light"] .contact-form, html[data-theme="light"] .admin-panel, html[data-theme="light"] .admin-stat-card { background: #fff; box-shadow: 0 5px 24px #173e4908; }
+html[data-theme="light"] .industry-panel { background: linear-gradient(125deg,#ffffff,#edf7f5); }
+html[data-theme="light"] .admin-sidebar nav a.is-active { background: #e1f1ed; color: #005e56; border-color: #8ebbb2; box-shadow: inset 3px 0 #006b63; }
+html[data-theme="light"] .admin-login-story { background: radial-gradient(ellipse at 20% 35%,#cfebe6,transparent 70%),#eaf5f3; }
+html[data-theme="light"] .admin-login-form-side { background: #f7fafb; }
+html[data-theme="light"] .admin-save-bar { background: #fffffff5; border-color: #a4bfc4; box-shadow: 0 8px 30px #173e4914; }
+.eyebrow, .hero-eyebrow { font-size: .8125rem; }
+.catalog-category, .home-service-category, .project-meta, .admin-eyebrow { font-size: .8125rem; }
+
+/* Admin logo studio. Each preview keeps its intended background in either UI theme. */
+.admin-appearance-intro { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,1fr); gap: 30px; align-items: center; margin-bottom: 26px; }
+.admin-appearance-kicker { display: flex; align-items: center; gap: 7px; color: var(--appearance-accent); font-size: .75rem; font-weight: 700; letter-spacing: .09em; margin-bottom: 13px; }
+.admin-root .admin-appearance-intro h3 { font-size: 1.3rem; letter-spacing: -.025em; margin-bottom: 10px; }
+.admin-appearance-intro > div > p { max-width: 540px; }
+.admin-appearance-intro .admin-field { margin-bottom: 0; }
+.admin-logo-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; }
+.admin-logo-card { min-width: 0; border: 1px solid var(--appearance-line); border-radius: 15px; overflow: hidden; }
+.admin-logo-preview { padding: 20px; min-height: 220px; display: flex; flex-direction: column; gap: 12px; }
+.admin-logo-preview[data-preview-theme="light"] { color: #18383f; background: radial-gradient(ellipse at 80% 100%,#dcefeb,transparent 75%),#fff; color-scheme: light; }
+.admin-logo-preview[data-preview-theme="dark"] { color: #e3f7f2; background: radial-gradient(ellipse at 80% 100%,#123e46,transparent 75%),#041820; color-scheme: dark; }
+.admin-logo-preview-label { display: flex; align-items: center; gap: 7px; font-size: .8125rem; font-weight: 650; }
+.admin-logo-preview-stage { display: grid; place-items: center; min-height: 112px; flex: 1; padding: 10px 0; }
+.admin-logo-preview-stage img { display: block; max-width: min(100%,300px); max-height: 110px; object-fit: contain; background: transparent; }
+.admin-logo-placeholder { font-weight: 750; font-size: clamp(1rem,1.7vw,1.35rem); line-height: 1.4; text-align: center; max-width: 330px; overflow-wrap: anywhere; letter-spacing: -.025em; }
+.admin-logo-preview > small { font-size: .75rem; text-align: center; }
+.admin-logo-card-body { padding: 23px; }
+.admin-root .admin-logo-card-body > h3 { display: flex; align-items: center; gap: 9px; font-size: 1.125rem; margin: 0 0 9px; }
+.admin-root .admin-logo-card-body > .admin-logo-guidance { font-size: .9375rem; line-height: 1.7; margin: 0 0 20px; }
+.admin-logo-card .admin-upload-area { display: flex; flex-direction: column; align-items: stretch; }
+.admin-logo-card .admin-upload-area > div { min-width: 0; width: 100%; }
+.admin-logo-card .admin-upload-preview { width: 100%; max-height: 110px; object-fit: contain; padding: 14px; }
+.admin-root .admin-upload-preview[data-preview-theme="light"] { background: #fff; }
+.admin-root .admin-upload-preview[data-preview-theme="dark"] { background: #041820; }
+.admin-legacy-logo { border-top: 1px solid var(--appearance-line); margin-top: 23px; padding-top: 18px; }
+.admin-legacy-logo summary { cursor: pointer; min-height: 44px; font-weight: 600; }
+.admin-legacy-logo > .admin-field { margin-top: 22px; }
+.admin-business-brand .business-brand { min-width: 0; gap: 9px; }
+.admin-business-brand .business-wordmark { min-width: 0; }
+.admin-business-brand .business-wordmark > strong { font-size: 1.35rem; }
+.admin-business-brand .business-wordmark > span { font-size: .625rem; letter-spacing: .06em; }
+.admin-business-brand .business-brand img { width: 38px; height: 38px; }
+.admin-business-brand .custom-business-name { font-size: 1rem !important; }
+.admin-login-tools { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.admin-login-tools .admin-back-link { margin: 0; }
+.admin-session .theme-switcher { margin-right: 5px; }
+
+@media(max-width:1150px) { .admin-logo-grid, .admin-appearance-intro { grid-template-columns: minmax(0,1fr); } }
+@media(max-width:1000px) {
+  .header-appearance { order: 1; margin-left: auto; }
+  .mobile-toggle { order: 2; margin-left: 0; }
+  .navigation { order: 3; }
+  .nav-shell { gap: .65rem; }
+  .brand-link { min-width: 0; max-width: calc(100% - 110px); }
+  .brand-link .business-brand, .brand-link .business-wordmark { min-width: 0; }
+}
+@media(max-width:560px) {
+  .theme-popover { position: fixed; top: 6rem; right: 1rem; width: min(310px,calc(100vw - 2rem)); max-height: calc(100dvh - 8rem); overflow-y: auto; }
+  .nav-shell { display: grid; grid-template-columns: minmax(0,1fr) 44px 44px; column-gap: 8px; }
+  .brand-link { width: 100%; max-width: 100%; }
+  .brand-link .business-brand { gap: 7px; }
+  .brand-link .business-brand img { width: 32px; height: 38px; }
+  .brand-link .business-wordmark > strong { font-size: 1.3rem; overflow-wrap: anywhere; }
+  .brand-link .business-brand.has-logo .business-wordmark > strong { font-size: 1.15rem; }
+  .brand-link .business-wordmark > span { font-size: .6rem; letter-spacing: .025em; }
+  .brand-link .business-brand.has-logo .business-wordmark > span { font-size: .6rem; }
+  .brand-link .business-wordmark .custom-business-name { font-size: .875rem; }
+  .mobile-toggle { width: 44px; height: 44px; }
+  .admin-logo-card-body { padding: 18px; }
+  .admin-logo-preview { padding: 16px; }
+  .admin-appearance-intro { gap: 22px; }
+  .admin-logo-card .admin-button { width: 100%; }
+  .admin-session { flex-shrink: 0; }
+  .admin-topbar { gap: 8px; }
+  .admin-session .theme-switcher { margin-right: 0; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .theme-ready body, .theme-toggle, .theme-option, .theme-popover { transition: none !important; animation: none !important; }
+  .theme-toggle:hover, .theme-toggle:active { transform: none; }
+}
+@media(forced-colors:active) {
+  .theme-toggle, .theme-popover, .theme-option { border: 1px solid ButtonText; }
+  .theme-option:has(input:checked) { outline: 2px solid Highlight; }
+  .theme-option:has(input:focus-visible) { outline: 3px solid Highlight; }
+}
+@container (max-width:70rem) {
+  .header-appearance { order: 1; margin-left: auto; }
+  .mobile-toggle { order: 2; margin-left: 0; }
+  .navigation { order: 3; }
+  .nav-shell { gap: .65rem; }
+}
+@media(max-width:560px) {
+  .nav-shell { width: calc(100% - 2rem); gap: 8px; }
+  .brand-link .business-wordmark > strong:not(.custom-business-name) { white-space: normal; }
+}
+
+/* Content must reflow rather than clip when visitors enlarge text to 200%. */
+.business-brand-footer, .footer-brand, .business-wordmark { min-width: 0; max-width: 100%; }
+.business-brand-footer .business-wordmark > strong { white-space: normal; overflow-wrap: anywhere; }
+.split-layout > *, .section-heading > *, .industry-layout > *, .queue-feature > *,
+.mission-vision-grid article, .mission-vision-grid article > div,
+.values-grid > *, .value-item > div, .catalog-group-heading > *,
+.contact-steps > div, .contact-steps > div > div,
+.admin-login-story, .admin-login-form-side { min-width: 0; max-width: 100%; }
+.section-heading h2, .industry-tabs button, .about-points > span, .text-link { overflow-wrap: anywhere; }
+.service-node > span { min-width: 0; overflow-wrap: anywhere; }
+html[data-theme="light"] .hero-description { color: var(--muted); }
+@media(max-width:760px) {
+  .split-layout, .industry-layout, .queue-feature, .mission-vision-grid,
+  .values-grid, .admin-login { grid-template-columns: minmax(0,1fr); }
+  .industry-tabs { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .industry-tabs button { min-width: 0; }
+  .business-brand-footer.has-logo { flex-wrap: wrap; }
+  .admin-business-brand .business-wordmark > strong { white-space: normal; overflow-wrap: anywhere; }
+}
+@container(max-width:14rem) {
+  .ecosystem { grid-template-columns: minmax(0,1fr); }
+  .service-node { grid-column: 1 !important; }
+  .industry-tabs { grid-template-columns: minmax(0,1fr); }
+  .mission-vision-grid article, .value-item { flex-wrap: wrap; }
+}
+/* Decorative orbits may exceed the panel, but must not expand its scroll area. */
+.industry-graphic { overflow: clip; }
+body { overflow-wrap: anywhere; }
+.button, .card-link, .text-link { max-width: 100%; }
+.project-info h3 a { display: block; }
+.project-info h3 a > svg { display: inline-block; margin-left: .3em; vertical-align: middle; }
+@media(max-width:560px) {
+  .mission-vision-grid article { flex-direction: column; gap: 16px; }
+  .mission-vision-grid article > div { width: 100%; }
+  .card-top { flex-wrap: wrap; }
+  .industry-panel li { display: block; }
+  .industry-panel li svg { display: inline-block; margin-right: .4em; vertical-align: middle; }
+  .expertise-card, .resource-card, .project-info, .mission-vision-grid article { padding: 20px; }
+}
